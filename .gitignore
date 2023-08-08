@@ -1,0 +1,9 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/bin
+/.vs/IncisiveDBAccessor
+/IIncisiveAccessor/obj/Debug
+/IIncisiveAccessor/bin/Debug
+/obj
