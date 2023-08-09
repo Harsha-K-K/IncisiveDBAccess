@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using ChDefine;
+using IIncisiveAccessor;
 using IncisiveDBAccessor.Extensions;
 using PatientDataInfo;
 using PatientDataService;
@@ -102,6 +103,24 @@ namespace IncisiveDBAccessor
             pOle.GetPatientStudyInfo(studyInstanceUids, ref patientStudyInfo);
 
             return patientStudyInfo;
+        }
+
+        /// <inheritdoc/>
+        public PatientStudyImageInfo GetPatientStudyImageInfo(string studyInstanceUid)
+        {
+            var patientStudyInfo = new PatientStudyInfo();
+            pOle.GetPatientStudyInfo(studyInstanceUid, ref patientStudyInfo);
+
+            var seriesInstanceUids = new StringList();
+            pOle.GetSeriesInstanceUIDLinkOfStudy(studyInstanceUid, ref seriesInstanceUids);
+
+            var imageSeriesInfo = new ImageSeriesInfo();
+            pOle.GetImageSeriesInfo(seriesInstanceUids.GetAt(0), ref imageSeriesInfo);
+
+            var patientStudyImageInfo = new PatientStudyImageInfo(imageSeriesInfo, patientStudyInfo.PatientInfos[0], patientStudyInfo.StudyInfos[0]);
+
+            return patientStudyImageInfo;
+
         }
     }
 }

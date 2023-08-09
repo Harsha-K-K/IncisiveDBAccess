@@ -76,5 +76,13 @@ namespace IIncisiveAccessor
         /// <returns>Patient Study info</returns>
         [OperationContract]
         PatientStudyInfo GetPatientStudyInfo(string studyInstanceUid);
+
+        /// <summary>
+        ///     Gets the Patient and Study and Image info to the study instance UID
+        /// </summary>
+        /// <param name="studyInstanceUid"></param>
+        /// <returns>Patient Study info</returns>
+        [OperationContract]
+        PatientStudyImageInfo GetPatientStudyImageInfo(string studyInstanceUid);
     }
 }
