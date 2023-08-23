@@ -42,6 +42,9 @@ namespace IncisiveDBAccessor
 
             pOle.GetSeriesInstanceUIDLinkOfStudy(studyInstaceUid, ref seriesInstanceUids);
 
+            var seriesInstanceUid = string.Join(Environment.NewLine, "SeriesInstanceUids: " + seriesInstanceUids);
+            Console.WriteLine(seriesInstanceUid);
+
             return seriesInstanceUids.ToEnumerable();
         }
 
@@ -51,6 +54,9 @@ namespace IncisiveDBAccessor
             var sopInstanceUids = new StringList();
 
             pOle.GetSOPInstanceUIDLinkOfImageSeries(seriesInstanceUids, ref sopInstanceUids);
+
+            var sopInstanceUid = string.Join(Environment.NewLine, "SopInstanceUids: " + sopInstanceUids);
+            Console.WriteLine(sopInstanceUid);
 
             return sopInstanceUids.ToEnumerable();
         }
@@ -62,6 +68,8 @@ namespace IncisiveDBAccessor
 
             pOle.GetPatientInfo(studyInstanceUids, ref patientInfo);
 
+            Console.WriteLine("GetPatientInfo");
+
             return patientInfo;
         }
 
@@ -71,6 +79,8 @@ namespace IncisiveDBAccessor
             var studyInfo = new StudyInfo();
 
             pOle.GetStudyInfo(studyInstanceUids, ref studyInfo);
+
+            Console.WriteLine("GetStudyInfo");
 
             return studyInfo;
         }
@@ -82,6 +92,8 @@ namespace IncisiveDBAccessor
 
             pOle.GetImageSeriesInfo(seriesInstanceUids, ref imageSeriesInfo);
 
+            Console.WriteLine("GetImageSeriesInfo");
+
             return imageSeriesInfo;
         }
 
@@ -92,6 +104,8 @@ namespace IncisiveDBAccessor
 
             pOle.GetPatientStudyInfoList(ref patientStudyInfoList);
 
+            Console.WriteLine("GetAllPatientStudyInfo");
+
             return patientStudyInfoList.ToEnumerable();
         }
 
@@ -101,6 +115,8 @@ namespace IncisiveDBAccessor
             var patientStudyInfo = new PatientStudyInfo();
 
             pOle.GetPatientStudyInfo(studyInstanceUids, ref patientStudyInfo);
+
+            Console.WriteLine("GetPatientStudyInfo");
 
             return patientStudyInfo;
         }
@@ -118,6 +134,8 @@ namespace IncisiveDBAccessor
             pOle.GetImageSeriesInfo(seriesInstanceUids.GetAt(0), ref imageSeriesInfo);
 
             var patientStudyImageInfo = new PatientStudyImageInfo(imageSeriesInfo, patientStudyInfo.PatientInfos[0], patientStudyInfo.StudyInfos[0]);
+
+            Console.WriteLine("GetPatientStudyImageInfo");
 
             return patientStudyImageInfo;
 
