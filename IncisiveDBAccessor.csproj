@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -62,19 +63,17 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChDefine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=223d991ebf2e6ef5, processorArchitecture=AMD64">
+    <Reference Include="ChDefine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CT_SW_Console\Bin\Output\ChDefine.dll</HintPath>
     </Reference>
-    <Reference Include="PatientDataInfo, Version=1.0.0.0, Culture=neutral, PublicKeyToken=223d991ebf2e6ef5, processorArchitecture=AMD64">
+    <Reference Include="PatientDataInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CT_SW_Console\Bin\Output\PatientDataInfo.dll</HintPath>
     </Reference>
-    <Reference Include="PatientDataService">
+    <Reference Include="PatientDataService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CT_SW_Console\Bin\Output\PatientDataService.exe</HintPath>
-    </Reference>
-    <Reference Include="Philips.Pcc.CT.Console.Foundation.Common">
-      <HintPath>..\CT_SW_Console\Bin\Output\Philips.Pcc.CT.Console.Foundation.Common.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

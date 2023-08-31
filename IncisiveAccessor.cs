@@ -100,9 +100,14 @@ namespace IncisiveDBAccessor
         /// <inheritdoc/>
         public IEnumerable<PatientStudyInfo> GetAllPatientStudyInfo()
         {
+            const string sqlQuery = "OPEN SYMMETRIC KEY ConsoleSymmetric DECRYPTION BY CERTIFICATE ConsoleCert;" +
+                "\r\nbegin try\r\nSelect top 5 * FROM StudyInfo, V_Pat_Reg_Info" +
+                " where StudyInfo.StudyInstanceUID =V_Pat_Reg_Info.StudyInstanceUID order by StudyInfo.StudyTime desc" +
+                "\r\nCLOSE SYMMETRIC KEY ConsoleSymmetric;\r\nend try\r\nbegin catch\r\n    CLOSE SYMMETRIC KEY ConsoleSymmetric;\r\nend catch";
+
             var patientStudyInfoList = new PatientStudyInfoList();
 
-            pOle.GetPatientStudyInfoList(ref patientStudyInfoList);
+            pOle.GetPatientStudyInfoList(sqlQuery, ref patientStudyInfoList);
 
             Console.WriteLine("GetAllPatientStudyInfo");
 

@@ -12,6 +12,7 @@ namespace IncisiveDBAccessor
             var uris = new Uri(Address);
             var accessor = new IncisiveAccessor();
             var bindings = new NetTcpBinding(SecurityMode.None);
+            bindings.MaxReceivedMessageSize = int.MaxValue;
 
             var host = new ServiceHost(accessor, uris);
             host.AddServiceEndpoint(typeof(IIncisiveAccessor.IIncisiveAccessor), bindings, "");
