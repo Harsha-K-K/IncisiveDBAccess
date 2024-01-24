@@ -58,11 +58,11 @@
   <ItemGroup>
     <Reference Include="ChDefine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CT_SW_Console\Bin\Output\ChDefine.dll</HintPath>
+      <HintPath>C:\Users\320116478\Desktop\AdapterFiles\WCF_Signed\ChDefine.dll</HintPath>
     </Reference>
     <Reference Include="PatientDataInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CT_SW_Console\Bin\Output\PatientDataInfo.dll</HintPath>
+      <HintPath>C:\Users\320116478\Desktop\AdapterFiles\WCF_Signed\PatientDataInfo.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

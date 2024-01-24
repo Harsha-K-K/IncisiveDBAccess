@@ -63,20 +63,22 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ChDefine, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CT_SW_Console\Bin\Output\ChDefine.dll</HintPath>
+    <Reference Include="ChDefine">
+      <HintPath>C:\Users\320116478\Desktop\AdapterFiles\WCF_Signed\ChDefine.dll</HintPath>
     </Reference>
-    <Reference Include="PatientDataInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="IIncisiveAccessor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=223d991ebf2e6ef5, processorArchitecture=AMD64">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CT_SW_Console\Bin\Output\PatientDataInfo.dll</HintPath>
+      <HintPath>IIncisiveAccessor\bin\x64\Debug\IIncisiveAccessor.dll</HintPath>
     </Reference>
-    <Reference Include="PatientDataService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\CT_SW_Console\Bin\Output\PatientDataService.exe</HintPath>
+    <Reference Include="PatientDataInfo">
+      <HintPath>C:\Users\320116478\Desktop\AdapterFiles\WCF_Signed\PatientDataInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="PatientDataService">
+      <HintPath>C:\Users\320116478\Desktop\AdapterFiles\WCF_Signed\PatientDataService.exe</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
@@ -95,12 +97,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="PmsMip.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="IIncisiveAccessor\IIncisiveAccessor.csproj">
-      <Project>{384C3610-65AC-47B0-8AD7-F18D6E0EE4A5}</Project>
-      <Name>IIncisiveAccessor</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

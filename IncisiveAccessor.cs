@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Management;
 using System.ServiceModel;
 using ChDefine;
 using IIncisiveAccessor;
@@ -10,7 +12,40 @@ using PatientDataService;
 
 namespace IncisiveDBAccessor
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+    public static class ProcessExtensions
+    {
+        private static string FindIndexedProcessName(int pid)
+        {
+            var processName = Process.GetProcessById(pid).ProcessName;
+            var processesByName = Process.GetProcessesByName(processName);
+            string processIndexdName = null;
+
+            for (var index = 0; index < processesByName.Length; index++)
+            {
+                processIndexdName = index == 0 ? processName : processName + "#" + index;
+                var processId = new PerformanceCounter("Process", "ID Process", processIndexdName);
+                if ((int)processId.NextValue() == pid)
+                {
+                    return processIndexdName;
+                }
+            }
+
+            return processIndexdName;
+        }
+
+        private static Process FindPidFromIndexedProcessName(string indexedProcessName)
+        {
+            var parentId = new PerformanceCounter("Process", "Creating Process ID", indexedProcessName);
+            return Process.GetProcessById((int)parentId.NextValue());
+        }
+
+        public static Process Parent(this Process process)
+        {
+            return FindPidFromIndexedProcessName(FindIndexedProcessName(process.Id));
+        }
+
+    }
+        [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class IncisiveAccessor : IIncisiveAccessor.IIncisiveAccessor
     {
         public PatientDataOLE pOle;
@@ -30,7 +65,8 @@ namespace IncisiveDBAccessor
                 ref filepaths);
 
             var filepath = string.Join(Environment.NewLine, filepaths);
-            Console.WriteLine(filepath);
+            Console.WriteLine($" GetImageFilePaths -> {string.Join(":",studyInstanceUids)}, {string.Join(":", seriesInstanceUids)}, " +
+                $"{string.Join(":", sopInstanceUids)} " + filepath);
 
             return filepaths;
         }
@@ -43,7 +79,7 @@ namespace IncisiveDBAccessor
             pOle.GetSeriesInstanceUIDLinkOfStudy(studyInstaceUid, ref seriesInstanceUids);
 
             var seriesInstanceUid = string.Join(Environment.NewLine, "SeriesInstanceUids: " + seriesInstanceUids);
-            Console.WriteLine(seriesInstanceUid);
+            Console.WriteLine(" GetSeriesInstanceUids for " + studyInstaceUid + " " +seriesInstanceUid);
 
             return seriesInstanceUids.ToEnumerable();
         }
@@ -56,7 +92,7 @@ namespace IncisiveDBAccessor
             pOle.GetSOPInstanceUIDLinkOfImageSeries(seriesInstanceUids, ref sopInstanceUids);
 
             var sopInstanceUid = string.Join(Environment.NewLine, "SopInstanceUids: " + sopInstanceUids);
-            Console.WriteLine(sopInstanceUid);
+            Console.WriteLine(" GetSopInstanceUids for " + seriesInstanceUids + " " + sopInstanceUid);
 
             return sopInstanceUids.ToEnumerable();
         }
@@ -68,7 +104,7 @@ namespace IncisiveDBAccessor
 
             pOle.GetPatientInfo(studyInstanceUids, ref patientInfo);
 
-            Console.WriteLine("GetPatientInfo");
+            Console.WriteLine(" GetPatientInfo for " + studyInstanceUids);
 
             return patientInfo;
         }
@@ -80,7 +116,7 @@ namespace IncisiveDBAccessor
 
             pOle.GetStudyInfo(studyInstanceUids, ref studyInfo);
 
-            Console.WriteLine("GetStudyInfo");
+            Console.WriteLine(" GetStudyInfo for " + studyInstanceUids);
 
             return studyInfo;
         }
@@ -92,7 +128,7 @@ namespace IncisiveDBAccessor
 
             pOle.GetImageSeriesInfo(seriesInstanceUids, ref imageSeriesInfo);
 
-            Console.WriteLine("GetImageSeriesInfo");
+            Console.WriteLine(" GetImageSeriesInfo for " + seriesInstanceUids);
 
             return imageSeriesInfo;
         }
@@ -109,7 +145,7 @@ namespace IncisiveDBAccessor
 
             pOle.GetPatientStudyInfoList(sqlQuery, ref patientStudyInfoList);
 
-            Console.WriteLine("GetAllPatientStudyInfo");
+            Console.WriteLine(" GetAllPatientStudyInfo");
 
             return patientStudyInfoList.ToEnumerable();
         }
@@ -121,7 +157,7 @@ namespace IncisiveDBAccessor
 
             pOle.GetPatientStudyInfo(studyInstanceUids, ref patientStudyInfo);
 
-            Console.WriteLine("GetPatientStudyInfo");
+            Console.WriteLine(" GetPatientStudyInfo for " + studyInstanceUids);
 
             return patientStudyInfo;
         }
@@ -140,10 +176,22 @@ namespace IncisiveDBAccessor
 
             var patientStudyImageInfo = new PatientStudyImageInfo(imageSeriesInfo, patientStudyInfo.PatientInfos[0], patientStudyInfo.StudyInfos[0]);
 
-            Console.WriteLine("GetPatientStudyImageInfo");
+            Console.WriteLine(" GetPatientStudyImageInfo for " + studyInstanceUid);
 
             return patientStudyImageInfo;
 
         }
+
+        public PatientInfo GetPatientInfoFromID(string patientID)
+        {
+            var patientInfo = new List<PatientInfo>();
+
+            pOle.GetPatientInfoOfID(patientID, ref patientInfo);
+
+            Console.WriteLine(" GetPatientInfo from ID");
+
+            return patientInfo.First();
+        }
+
     }
 }
